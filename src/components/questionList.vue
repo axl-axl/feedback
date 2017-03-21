@@ -8,7 +8,8 @@
 		</ul>
 		<div class="search_btn" v-on:click="getDatas({mark:$route.params.status,key:search_text})">搜索</div>
 		<input type="text" name="search" class="search_box" v-model="search_text">
-		<div class="add">新增</div>
+		<div class="add" v-on:click="showMask">新增</div>
+		<add-question></add-question>
 		<div class="table">
 			<div class="table_head clearfix">
 				<div class="tb_fkTime pull-left">反馈时间</div>	
@@ -44,6 +45,7 @@
 </template>
 <script type="text/javascript">
 import Vue from 'vue';
+import addQuestion from './addQuestion';
 	export default{
 		name:'questionList',
 		data(){
@@ -56,10 +58,17 @@ import Vue from 'vue';
 				currentPage:1
 			}
 		},
+		components:{
+			addQuestion:addQuestion
+		},
 		props: ['statusList','current'],
 		methods:{
 			change_status(event){
 				Vue.set(this,'currents',event.target.dataset.index)
+			},
+			showMask(){
+				let addHtml = document.querySelector('.addHtml');
+				addHtml.setAttribute('class','addHtml active')
 			},
 			go_info(event){
 				if(this.$route.name.toLowerCase() == 'index'){
